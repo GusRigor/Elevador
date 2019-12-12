@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------------------------
 --                                                                                            -
---    Projeto: elevador_simples_5                                                             -
+--    Projeto: elevador_3                                                             -
 --                                                                                            -
 --    Este projeto foi desenvolvido para ilustrar o conceito de maquina de estados            -
 --		O projeto controla um elevador de carga de 5 andares.                                   -
@@ -11,7 +11,7 @@
 library ieee; 
 use ieee.std_logic_1164.all;		-- Defini��o das bibliotecas a serem utilizadas no projeto.
 
-entity elevador_simples_5 is		-- In�cio do projeto, onde ser� definido as entradas e sa�das
+entity elevador_3 is		-- In�cio do projeto, onde ser� definido as entradas e sa�das
 											-- utilizadas
 	port
 	(
@@ -19,9 +19,9 @@ entity elevador_simples_5 is		-- In�cio do projeto, onde ser� definido as en
 		SNS_ANDAR, BOTAO		: in std_logic_vector (1 to 3);
 		MOTOR						: out std_logic_vector (1 downto 0)
 	);
-end entity elevador_simples_5;
+end entity elevador_3;
 
-architecture comportamento of elevador_simples_5 is
+architecture comportamento of elevador_3 is
    -- CHAMADOS registra os andares em que o elevador foi solicitado
 	-- ANDAR registra o ultimo andar pelo qual o elevador passou
 	signal  CHAMADOS, ANDAR				: std_logic_vector (1 to 3);
