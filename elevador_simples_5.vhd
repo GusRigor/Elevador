@@ -16,7 +16,7 @@ entity elevador_simples_5 is		-- In�cio do projeto, onde ser� definido as en
 	port
 	(
 		RESETn, CLK				: in std_logic;
-		SNS_ANDAR, BOTAO		: in std_logic_vector (1 to 5);
+		SNS_ANDAR, BOTAO		: in std_logic_vector (1 to 3);
 		MOTOR						: out std_logic_vector (1 downto 0)
 	);
 end entity elevador_simples_5;
@@ -24,7 +24,7 @@ end entity elevador_simples_5;
 architecture comportamento of elevador_simples_5 is
    -- CHAMADOS registra os andares em que o elevador foi solicitado
 	-- ANDAR registra o ultimo andar pelo qual o elevador passou
-	signal  CHAMADOS, ANDAR				: std_logic_vector (1 to 5);
+	signal  CHAMADOS, ANDAR				: std_logic_vector (1 to 3);
 	
 	-- SENTIDO apresenta o sentido que o elevador esta indo
 	-- '1' = subindo e '0' = descendo
@@ -41,15 +41,15 @@ begin
 
 
 	process (RESETn, CLK, SNS_ANDAR, BOTAO, CHAMADOS, MAQUINA_ELEVADOR)
-		variable ANDAR_CHAMADO: std_logic_vector (1 to 5) := "00000";
+		variable ANDAR_CHAMADO: std_logic_vector (1 to 3) := "000";
 	begin
 
 		if (CLK'event and CLK = '1' ) then
-			if  (SNS_ANDAR /= "00000") then
+			if  (SNS_ANDAR /= "000") then
 				ANDAR <= SNS_ANDAR;
 			end if;
 
-			if (BOTAO /= "00000") then
+			if (BOTAO /= "000") then
 			-- Se o botao for apertado, ANDAR_CHAMADO seta o bit correspondente ao andar
 			-- de forma que ele nao registra duas vezes o mesmo andar 
 				ANDAR_CHAMADO := ANDAR_CHAMADO or BOTAO;
@@ -78,28 +78,18 @@ begin
 						MAQUINA_ELEVADOR <= PARTIDA;
 				
 				when PARTIDA =>
-					if (SNS_ANDAR /= "00000") then
+					if (SNS_ANDAR /= "000") then
 						MAQUINA_ELEVADOR <= PARADO;
 					end if;
 
 			-- O elevador sobe at� o andar mais alto e depois vai descendo e parando
 				when SUBINDO =>
 					-- Rotina de detec�ao do andar mais alto solicitado
-					if CHAMADOS(5) = '1' then
-						if SNS_ANDAR (5) /= '0'  then
-						MAQUINA_ELEVADOR <=  PARADO;
-						flag <= '0';
-						end if;
-					elsif CHAMADOS(4) = '1' then
-						if SNS_ANDAR (4) /= '0'  then
-						MAQUINA_ELEVADOR <=  PARADO;
-						flag <= '0';
-						end if;
-					elsif CHAMADOS(3) = '1' then
+					if CHAMADOS(3) = '1' then
 						if SNS_ANDAR (3) /= '0'  then
 						MAQUINA_ELEVADOR <=  PARADO;
 						flag <= '0';
-						end if;						
+						end if;					
 					elsif CHAMADOS(2) = '1' then
 						if SNS_ANDAR (2) /= '0'  then
 						MAQUINA_ELEVADOR <=  PARADO;
@@ -115,7 +105,7 @@ begin
 				-- Se o elevador passar por algum andar solicitado, ele vai para o estado PARADO,
 				-- e desce at� o andar mais baixo solicitado antes de voltar a subir.
 				when DESCENDO =>
-					if ( SNS_ANDAR and CHAMADOS) /= "00000"  then
+					if ( SNS_ANDAR and CHAMADOS) /= "000"  then
 						MAQUINA_ELEVADOR <= PARADO;
 					end if;
 					-- Rotina de detec��o do andar solicitado mais baixo para possibilitar a habilita��o
@@ -132,19 +122,11 @@ begin
 						if SNS_ANDAR (3) /= '0'  then
 						flag <= '1';
 						end if;						
-					elsif CHAMADOS(4) = '1' then
-						if SNS_ANDAR (4) /= '0'  then
-						flag <= '1';
-						end if;
-					elsif CHAMADOS(5) = '1' then
-						if SNS_ANDAR (5) /= '0'  then
-						flag <= '1';
-						end if;
 					end if;
 						
 				
 				when others =>  -- Ou seja, quando PARADO:
-					if (PAUSA_ANDAR = '0') and (CHAMADOS /= "00000") then
+					if (PAUSA_ANDAR = '0') and (CHAMADOS /= "000") then
 						if (CHAMADOS < ANDAR) and flag = '1' then
 							MAQUINA_ELEVADOR <= SUBINDO;						 
 						else
