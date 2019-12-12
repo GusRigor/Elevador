@@ -8,13 +8,12 @@ end entity tb_elevador_simples;
 
 architecture interface of tb_elevador_simples is
 	signal  RESETn, CLK								: std_logic; 	
-	signal  SNS_ANDAR,  BOTAO						: std_logic_vector (1 to 5);
+	signal  SNS_ANDAR,  BOTAO						: std_logic_vector (1 to 3);
 	signal  MOTOR										: std_logic_vector (1 downto 0);
-	signal  TRAVA_PORTA								: std_logic;
 	
 begin
 
-uut:  entity work.elevador_simples_5
+uut:  entity work.elevador_3
 port map
 	(
 		RESETn, CLK,
@@ -29,14 +28,14 @@ port map
 Gera_Clock:
 		process
 		begin
-		--	simulaÁ„o do pressionamento do bot„o de reset.
+		--	simula√ß√£o do pressionamento do bot√£o de reset.
 			resetn <= '0' after 0 ms,
 						'1' after 1  ms,
 						'0' after 300 ms;
 
 			CLK <= '0';
 			wait for 1 ms;
-		-- rotina de geraÁ„o de clock
+		-- rotina de gera√ß√£o de clock
 			while resetn = '1' loop
 				CLK <= not CLK;
 				wait for 20833 ps;
@@ -45,21 +44,20 @@ Gera_Clock:
 			wait;
 		end process;
 
-
 elevador:
 process
 begin
-	SNS_ANDAR <= "00000";
-	BOTAO <= "00000";
-	TRAVA_PORTA <= '1';
+	SNS_ANDAR <= "000";
+	BOTAO <= "000";
+
 
 	
-	SNS_ANDAR <= "10000";
+	SNS_ANDAR <= "100";
 	wait for 20ms;
-	-- Pressionamento do bot„o do 5∫ andar
-	BOTAO <= "00001";
+	-- Pressionamento do bot√£o do 3¬∫ andar
+	BOTAO <= "001";
 	wait for 20ms;
-	BOTAO <= "00000";
+	BOTAO <= "000";
 	wait for 20ms;
 	
 
@@ -67,64 +65,64 @@ begin
 		wait for 10 ms;
 	end loop;	
 		
-	SNS_ANDAR <= "00000";
+	SNS_ANDAR <= "000";
 	wait for 15ms;
 
-	SNS_ANDAR <= "00100";
+	SNS_ANDAR <= "010";
 	wait for 5ms;
 	
-	SNS_ANDAR <= "00000";
+	SNS_ANDAR <= "000";
 	wait for 15ms;
 
-	SNS_ANDAR <= "00001";
+	SNS_ANDAR <= "001";
 	wait for 10ms;
-	-- Pressionamento do bot„o do 4∫ andar
-	BOTAO <= "00010";
+	-- Pressionamento do bot√£o do 2¬∫ andar
+	BOTAO <= "010";
 	wait for 10ms;
-	BOTAO <= "00000";
+	BOTAO <= "000";
 	wait for 5ms;
 
-	-- Pressionamento do bot„o do 2∫ andar
-	BOTAO <= "01000";
+	-- Pressionamento do bot√£o do 1¬∫ andar
+	BOTAO <= "100";
 	wait for 5ms;
-	BOTAO <= "00000";
+	BOTAO <= "000";
 	wait for 5ms;
 
 	while ( MOTOR = "00") loop
 		wait for 5 ms;
 	end loop;	
 
-	SNS_ANDAR <= "00000";
+	SNS_ANDAR <= "000";
 	wait for 10ms;
 
-	SNS_ANDAR <= "00010";	--Chegou ao quarto andar...
+	SNS_ANDAR <= "010";	--Chegou ao segundo andar...
 	wait for 10ms;
 
 	while ( MOTOR = "00") loop
 		wait for 5 ms;
 	end loop;	
 
-	SNS_ANDAR <= "00000";
+	SNS_ANDAR <= "000";
 	wait for 10ms;
 	
-	BOTAO <= "00010";
+	BOTAO <= "010";
 	wait for 5ms;
 	BOTAO <= "00000";
 	wait for 20ms;
 	
-	SNS_ANDAR <= "00100";	--Chegou ao terceiro andar...
+	SNS_ANDAR <= "001";	--Chegou ao primeiro andar...
 	wait for 5ms;
 	
-	-- Pressionamento do bot„o do 4∫ andar quando est· descendo
-	BOTAO <= "00010";
+	-- Pressionamento do bot√£o do 3¬∫ andar quando est√° descendo
+	BOTAO <= "100";
 	wait for 5ms;
-	BOTAO <= "00000";
+	BOTAO <= "000";
 	wait for 20ms;
-	SNS_ANDAR <= "00000";
+	SNS_ANDAR <= "000";
 	
 	wait for 10ms;
 	
-	SNS_ANDAR <= "01000";	--Chegou ao segundo andar...
+	SNS_ANDAR <= "001";	--Chegou ao primeiro andar...
 	wait for 5ms;
 	
 	wait;
