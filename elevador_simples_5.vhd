@@ -9,16 +9,15 @@
 -----------------------------------------------------------------------------------------------
 
 library ieee; 
-use ieee.std_logic_1164.all;		-- Definição das bibliotecas a serem utilizadas no projeto.
+use ieee.std_logic_1164.all;		-- Definiï¿½ï¿½o das bibliotecas a serem utilizadas no projeto.
 
-entity elevador_simples_5 is		-- Início do projeto, onde será definido as entradas e saídas
+entity elevador_simples_5 is		-- Inï¿½cio do projeto, onde serï¿½ definido as entradas e saï¿½das
 											-- utilizadas
 	port
 	(
 		RESETn, CLK				: in std_logic;
 		SNS_ANDAR, BOTAO		: in std_logic_vector (1 to 5);
-		MOTOR						: out std_logic_vector (1 downto 0);
-		TRAVA_PORTA				: out std_logic
+		MOTOR						: out std_logic_vector (1 downto 0)
 	);
 end entity elevador_simples_5;
 
@@ -83,9 +82,9 @@ begin
 						MAQUINA_ELEVADOR <= PARADO;
 					end if;
 
-			-- O elevador sobe até o andar mais alto e depois vai descendo e parando
+			-- O elevador sobe atï¿½ o andar mais alto e depois vai descendo e parando
 				when SUBINDO =>
-					-- Rotina de detecçao do andar mais alto solicitado
+					-- Rotina de detecï¿½ao do andar mais alto solicitado
 					if CHAMADOS(5) = '1' then
 						if SNS_ANDAR (5) /= '0'  then
 						MAQUINA_ELEVADOR <=  PARADO;
@@ -114,12 +113,12 @@ begin
 					end if;
 						
 				-- Se o elevador passar por algum andar solicitado, ele vai para o estado PARADO,
-				-- e desce até o andar mais baixo solicitado antes de voltar a subir.
+				-- e desce atï¿½ o andar mais baixo solicitado antes de voltar a subir.
 				when DESCENDO =>
 					if ( SNS_ANDAR and CHAMADOS) /= "00000"  then
 						MAQUINA_ELEVADOR <= PARADO;
 					end if;
-					-- Rotina de detecção do andar solicitado mais baixo para possibilitar a habilitação
+					-- Rotina de detecï¿½ï¿½o do andar solicitado mais baixo para possibilitar a habilitaï¿½ï¿½o
 					-- de subida novamente
 					if CHAMADOS(1) = '1' then
 						if SNS_ANDAR (1) /= '0'  then
@@ -185,8 +184,5 @@ begin
 						"10" when DESCENDO,
 						"00" when OTHERS;
 
-	with MAQUINA_ELEVADOR select
-	    TRAVA_PORTA  <= '0' when  PARADO,
-							  '1' when OTHERS;
 							  
 end architecture comportamento;
