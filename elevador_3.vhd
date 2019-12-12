@@ -1,11 +1,10 @@
 -----------------------------------------------------------------------------------------------
 --                                                                                            -
---    Projeto: elevador_3                                                             -
+--    Projeto: elevador_3                                                                     -
 --                                                                                            -
 --    Este projeto foi desenvolvido para ilustrar o conceito de maquina de estados            -
---		O projeto controla um elevador de carga de 5 andares.                                   -
+--		O projeto controla um elevador de carga de 5 andares.                                 -
 --                                                                                            -
---    Por:  Prof. Edson Melo                                                                  -
 -----------------------------------------------------------------------------------------------
 
 library ieee; 
