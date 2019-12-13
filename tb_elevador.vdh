@@ -1,0 +1,87 @@
+
+-- Libraries
+LIBRARY ieee;
+USE ieee.numeric_std.ALL;
+USE ieee.std_logic_1164.ALL;
+USE ieee.std_logic_unsigned.ALL;
+USE ieee.std_logic_textio.ALL;
+USE std.textio.ALL;
+
+--  Entity Declaration - Testbench
+ENTITY tb_elevador is
+END tb_elevador;
+
+--  Architecture Body
+ARCHITECTURE arq OF tb_elevador is
+	component elevador
+		port(
+			SW : in std_logic_vector(17 downto 0);
+			HEX6 : out  std_logic_vector(6 downto 0);
+			LEDR : out std_logic_vector(0 downto 0)
+		);        
+	end component; 
+
+-- signals
+ 	--signal SEL : std_logic_vector(2 downto 0) := "000";
+	--signal Result : std_logic_vector(4 downto 0) := "00000";
+	--signal NUM1 : std_logic_vector(3 downto 0) := "0000";
+	--signal NUM2 : std_logic_vector(3 downto 0) := "0000";
+	signal SW : std_logic_vector(17 downto 0) := "000000000000000000";
+	signal LEDR : std_logic_vector(0 downto 0) := "0";
+	signal HEX6 : std_logic_vector(6 downto 0) := "0000000";
+ 
+--------------------------------------------------------------------------------
+-- TestBench Architecture
+--------------------------------------------------------------------------------
+begin
+	inst_somador : elevador
+    		Port map (      
+      			SW   => SW,
+			HEX6 => HEX6,
+      			LEDR => LEDR
+    		);
+	BinInput:
+	process
+	begin
+		SW(17 downto 0) <= "100000000000000000";
+                WAIT FOR 100ns;
+		SW(17 downto 0) <= "100000000000000001";
+                WAIT FOR 100ns;
+		SW(17 downto 0) <= "000000000000000001";
+                WAIT FOR 100ns;
+		SW(17 downto 0) <= "010000000000000001";
+                WAIT FOR 100ns;
+		SW(17 downto 0) <= "000000000000000001";
+                WAIT FOR 100ns;
+		SW(17 downto 0) <= "001000000000000001";
+                WAIT FOR 100ns;
+		SW(17 downto 0) <= "001000000000000000";
+                WAIT FOR 100ns;
+		
+		SW(17 downto 0) <= "100000000000000000";
+                WAIT FOR 100ns;
+		SW(17 downto 0) <= "100000000000000011";
+                WAIT FOR 100ns;
+		SW(17 downto 0) <= "000000000000000011";
+                WAIT FOR 100ns;
+		SW(17 downto 0) <= "010000000000000011";
+                WAIT FOR 100ns;
+		SW(17 downto 0) <= "010000000000000001";
+                WAIT FOR 100ns;
+		SW(17 downto 0) <= "000000000000000001";
+                WAIT FOR 100ns;
+		SW(17 downto 0) <= "001000000000000001";
+                WAIT FOR 100ns;
+		SW(17 downto 0) <= "001000000000000000";
+                WAIT FOR 100ns;
+	end process;
+END arq;
+-- End of file
+
+
+
+
+
+
+
+
