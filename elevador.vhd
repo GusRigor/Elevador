@@ -90,12 +90,15 @@ proc_main:
 					resultd <= "0";
 				else
 				--SE o botao1 for para 1, ligar o verde
-					
+					if botao1 = "1" then
+						result <= "0";
+						resultd <= "1";
+					end if;
 				--SE o botao3 for para 1, ligar o vermelho
+					if botao3 = "1" then
 						result <= "1";
-						
-						
-						
+						resultd <= "0";
+					end if;
 				end if;
 			end if;
 
@@ -114,6 +117,7 @@ proc_main:
 					result <= "0";
 					resultd <= "0";
 				else
+					result <= "0";
 					resultd <= "1";
 				end if;
 			end if;
